@@ -3,14 +3,19 @@ import react from '@vitejs/plugin-react';
 import dts from 'vite-plugin-dts';
 import { resolve } from 'path';
 
+const isStorybook = process.argv[1]?.includes('storybook');
+
 export default defineConfig({
   plugins: [
     react(),
-    dts({
-      tsconfigPath: './tsconfig.json',
-      rollupTypes: true,
-      insertTypesEntry: true,
-    }),
+    ...(!isStorybook
+      ? [
+          dts({
+            tsconfigPath: './tsconfig.json',
+            insertTypesEntry: true,
+          }),
+        ]
+      : []),
   ],
   build: {
     lib: {
