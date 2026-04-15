@@ -1,0 +1,41 @@
+/* Creative fonts for the WarmBros library preview */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Righteous&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* Sets library-wide theme variables. Wrap any app root with .wb-theme. */
+.wb-theme {
+  --wb-accent: #B51A2B;
+  --wb-accent-soft: rgba(181, 26, 43, 0.2);
+  --wb-surface: rgba(255, 255, 255, 0.03);
+  --wb-border: rgba(255, 255, 255, 0.08);
+  --wb-fg: #ffffff;
+  --wb-fg-muted: rgba(218, 212, 212, 0.7);
+
+  --wb-font-sans: 'Inter', system-ui, sans-serif;
+  --wb-font-display: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+  --wb-font-brand: 'Righteous', 'Space Grotesk', cursive;
+  --wb-font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  font-family: var(--wb-font-sans);
+  color: var(--wb-fg);
+}
+
+/* Story wrapper: give components a dark canvas so docs preview shows them correctly */
+.wb-story {
+  background: #0a0a1a;
+  min-height: 100vh;
+  padding: 0;
+}
+
+/* Storybook docs preview: ensure our components render against dark bg inside docs iframe too */
+.sb-show-main.sb-main-padded,
+.sb-show-main.sb-main-fullscreen {
+  background: #0a0a1a;
+}
+
+/* Reset list styling inside stories (Docs preview injects list styling) */
+.wb-theme ul,
+.wb-theme ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
