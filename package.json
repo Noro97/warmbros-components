@@ -1,6 +1,6 @@
 {
   "name": "@warmbros/warmbros-components",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "React component library by WarmBros — pricing, footer, scroll-reveal frame, 3D logo forge, and brand primitives. CSS Modules, themeable via CSS variables, zero Tailwind dependency.",
   "type": "module",
   "author": "Norayr Avetisyan <norayr@warmbros.dev>",
