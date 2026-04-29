@@ -1,0 +1,465 @@
+/* === Root layout === */
+.root {
+  --wb-forge-accent: #B51A2B;
+  --wb-forge-bg: #08080f;
+  --wb-forge-fg: rgba(255, 255, 255, 0.85);
+  --wb-forge-fg-muted: rgba(255, 255, 255, 0.55);
+  --wb-forge-fg-faint: rgba(255, 255, 255, 0.4);
+  --wb-forge-border: rgba(255, 255, 255, 0.06);
+  --wb-forge-border-strong: rgba(255, 255, 255, 0.12);
+  --wb-forge-surface: rgba(255, 255, 255, 0.025);
+  --wb-forge-surface-active: rgba(255, 255, 255, 0.05);
+  --wb-forge-radius: 16px;
+  --wb-forge-radius-sm: 10px;
+  --wb-forge-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --wb-forge-canvas-height: 80vh;
+
+  display: grid;
+  gap: 24px;
+  color: var(--wb-forge-fg);
+  font-family: inherit;
+  width: 100%;
+}
+
+.root.layoutSide {
+  grid-template-columns: minmax(280px, 360px) 1fr;
+}
+
+.root.layoutStack {
+  grid-template-columns: 1fr;
+}
+
+@media (max-width: 900px) {
+  .root.layoutSide {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* === Panels === */
+.controlsPanel {
+  border: 1px solid var(--wb-forge-border);
+  border-radius: var(--wb-forge-radius);
+  background: linear-gradient(135deg, var(--wb-forge-surface), transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 24px;
+  max-height: var(--wb-forge-canvas-height);
+  overflow-y: auto;
+}
+
+@media (max-width: 900px) {
+  .controlsPanel {
+    max-height: none;
+  }
+}
+
+.canvasPanel {
+  position: relative;
+  border: 1px solid var(--wb-forge-border);
+  border-radius: var(--wb-forge-radius);
+  background: var(--wb-forge-bg);
+  overflow: hidden;
+  height: var(--wb-forge-canvas-height);
+}
+
+/* Canvas-only mode (no controls panel) — used by <LogoForge> by default */
+.canvasOnly {
+  --wb-forge-accent: #B51A2B;
+  --wb-forge-bg: #08080f;
+  --wb-forge-fg-faint: rgba(255, 255, 255, 0.4);
+  --wb-forge-fg-muted: rgba(255, 255, 255, 0.55);
+  --wb-forge-border: rgba(255, 255, 255, 0.06);
+  --wb-forge-radius: 16px;
+  --wb-forge-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  position: relative;
+  width: 100%;
+  border: 1px solid var(--wb-forge-border);
+  border-radius: var(--wb-forge-radius);
+  background: var(--wb-forge-bg);
+  overflow: hidden;
+  font-family: inherit;
+}
+
+@media (max-width: 900px) {
+  .canvasPanel {
+    aspect-ratio: 4 / 3;
+    height: auto;
+  }
+}
+
+.canvasChrome {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.chromeDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.chromeLabel {
+  margin-left: 8px;
+  font-family: var(--wb-forge-mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--wb-forge-fg-faint);
+}
+
+.canvasHint {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  font-family: var(--wb-forge-mono);
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  color: var(--wb-forge-fg-muted);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* === Controls === */
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sectionLabel {
+  font-family: var(--wb-forge-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--wb-forge-fg-faint);
+}
+
+/* Upload */
+.uploadDrop {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  border: 1px dashed var(--wb-forge-border-strong);
+  border-radius: 12px;
+  background: var(--wb-forge-surface);
+  cursor: pointer;
+  transition: border-color 200ms, background-color 200ms;
+}
+
+.uploadDrop:hover {
+  border-color: color-mix(in srgb, var(--wb-forge-accent) 50%, transparent);
+}
+
+.uploadDrop.dragActive {
+  border-color: color-mix(in srgb, var(--wb-forge-accent) 70%, transparent);
+  background: color-mix(in srgb, var(--wb-forge-accent) 6%, transparent);
+}
+
+.uploadIcon {
+  flex-shrink: 0;
+  color: color-mix(in srgb, var(--wb-forge-accent) 80%, white);
+}
+
+.uploadText {
+  flex: 1;
+  min-width: 0;
+}
+
+.uploadFilename {
+  font-family: var(--wb-forge-mono);
+  font-size: 12px;
+  color: var(--wb-forge-fg);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.uploadHint {
+  font-family: var(--wb-forge-mono);
+  font-size: 10px;
+  color: var(--wb-forge-fg-faint);
+  margin-top: 2px;
+}
+
+.hiddenInput {
+  display: none;
+}
+
+/* Preset grid */
+.presetGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.presetButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 1px solid var(--wb-forge-border);
+  border-radius: var(--wb-forge-radius-sm);
+  background: var(--wb-forge-surface);
+  font-family: var(--wb-forge-mono);
+  font-size: 11px;
+  color: var(--wb-forge-fg-muted);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 200ms, background-color 200ms, color 200ms;
+}
+
+.presetButton:hover {
+  border-color: color-mix(in srgb, var(--wb-forge-accent) 30%, transparent);
+  background: color-mix(in srgb, var(--wb-forge-accent) 4%, transparent);
+  color: var(--wb-forge-fg);
+}
+
+.presetButton.active {
+  border-color: color-mix(in srgb, var(--wb-forge-accent) 40%, transparent);
+  background: color-mix(in srgb, var(--wb-forge-accent) 8%, transparent);
+  color: var(--wb-forge-fg);
+}
+
+.presetSwatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.presetLabel {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Material type segmented control */
+.segmented {
+  display: flex;
+  gap: 2px;
+  padding: 2px;
+  border: 1px solid var(--wb-forge-border);
+  border-radius: var(--wb-forge-radius-sm);
+  background: var(--wb-forge-surface);
+}
+
+.segmentedButton {
+  flex: 1;
+  padding: 6px 8px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  font-family: var(--wb-forge-mono);
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--wb-forge-fg-faint);
+  cursor: pointer;
+  transition: background-color 200ms, color 200ms;
+}
+
+.segmentedButton:hover {
+  color: var(--wb-forge-fg);
+}
+
+.segmentedButton.active {
+  background: color-mix(in srgb, var(--wb-forge-accent) 15%, transparent);
+  color: color-mix(in srgb, var(--wb-forge-accent) 80%, white);
+}
+
+/* Color picker */
+.colorRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.colorInput {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid var(--wb-forge-border-strong);
+  border-radius: var(--wb-forge-radius-sm);
+  background: transparent;
+  cursor: pointer;
+}
+
+.colorInput::-webkit-color-swatch-wrapper {
+  padding: 4px;
+}
+
+.colorInput::-webkit-color-swatch {
+  border-radius: 6px;
+  border: none;
+}
+
+.colorValue {
+  font-family: var(--wb-forge-mono);
+  font-size: 12px;
+  color: var(--wb-forge-fg-muted);
+  text-transform: uppercase;
+}
+
+/* Slider */
+.slider {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sliderHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sliderLabel {
+  font-family: var(--wb-forge-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--wb-forge-fg-faint);
+}
+
+.sliderValue {
+  font-family: var(--wb-forge-mono);
+  font-size: 12px;
+  color: var(--wb-forge-fg-muted);
+}
+
+.range {
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+}
+
+.range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--wb-forge-accent);
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.4);
+}
+
+.range::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--wb-forge-accent);
+  cursor: pointer;
+  border: none;
+}
+
+.range:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* Select */
+.select {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid var(--wb-forge-border);
+  border-radius: var(--wb-forge-radius-sm);
+  background: var(--wb-forge-surface);
+  color: var(--wb-forge-fg);
+  font-family: var(--wb-forge-mono);
+  font-size: 12px;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 200ms;
+}
+
+.select:focus {
+  border-color: color-mix(in srgb, var(--wb-forge-accent) 40%, transparent);
+}
+
+/* Rotate row */
+.rotateRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.toggleButton {
+  padding: 6px 12px;
+  border: 1px solid var(--wb-forge-border-strong);
+  border-radius: var(--wb-forge-radius-sm);
+  background: transparent;
+  font-family: var(--wb-forge-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--wb-forge-fg-muted);
+  cursor: pointer;
+  transition: background-color 200ms, color 200ms, border-color 200ms;
+}
+
+.toggleButton.active {
+  border-color: color-mix(in srgb, var(--wb-forge-accent) 30%, transparent);
+  background: color-mix(in srgb, var(--wb-forge-accent) 15%, transparent);
+  color: color-mix(in srgb, var(--wb-forge-accent) 80%, white);
+}
+
+.rotateSpeed {
+  flex: 1;
+}
+
+.rotateSpeedValue {
+  font-family: var(--wb-forge-mono);
+  font-size: 10px;
+  color: var(--wb-forge-fg-faint);
+  width: 32px;
+  text-align: right;
+}
+
+/* Reset button */
+.resetButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  margin-top: 8px;
+  border: 1px solid var(--wb-forge-border-strong);
+  border-radius: var(--wb-forge-radius-sm);
+  background: var(--wb-forge-surface);
+  font-family: var(--wb-forge-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--wb-forge-fg-muted);
+  cursor: pointer;
+  transition: border-color 200ms, color 200ms;
+}
+
+.resetButton:hover {
+  border-color: color-mix(in srgb, var(--wb-forge-accent) 30%, transparent);
+  color: color-mix(in srgb, var(--wb-forge-accent) 80%, white);
+}

@@ -3,3 +3,8 @@ dist/
 storybook-static/
 *.tsbuildinfo
 .DS_Store
+
+# claude / skill tooling
+.agents/
+.claude/skills/
+skills-lock.json

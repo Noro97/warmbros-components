@@ -25,6 +25,7 @@ export default defineConfig({
         index: resolve(__dirname, 'src/index.ts'),
         SplineScene: resolve(__dirname, 'src/components/SplineScene/index.ts'),
         Receipt3D: resolve(__dirname, 'src/components/Receipt3D/index.ts'),
+        LogoForge: resolve(__dirname, 'src/components/LogoForge/index.ts'),
       },
       name: 'WarmBrosComponents',
       formats: ['es', 'cjs'],
@@ -41,6 +42,12 @@ export default defineConfig({
         // Externalize the heavy runtimes so consumers install them only if they use 3D subpaths.
         '@splinetool/react-spline',
         '@splinetool/runtime',
+        // LogoForge dependencies — externalized so consumers who don't import
+        // the LogoForge subpath never pay for three.js.
+        'three',
+        /^three\//, // examples/jsm/loaders/SVGLoader.js, etc.
+        '@react-three/fiber',
+        '@react-three/drei',
       ],
       output: {
         globals: {
